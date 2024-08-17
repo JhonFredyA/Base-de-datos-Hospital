@@ -1,0 +1,141 @@
+-- Active: 1723249390528@@127.0.0.1@3306
+CREATE DATABASE Hospital
+    DEFAULT CHARACTER SET = 'utf8mb4';
+
+    USE Hospital;
+
+    CREATE Table pacientes(
+        id_pac INT(5) PRIMARY KEY AUTO_INCREMENT ,
+        nombre_pac VARCHAR (10),
+        apellido_pac VARCHAR (10),
+        fecha_de_nacimiento_pac DATETIME,
+        numero_identificacion_pac INT(10),
+        numero_de_seguridad_social INT (10)
+    );
+
+    CREATE TABLE plantas(
+        id_plan INT (5) PRIMARY KEY AUTO_INCREMENT,
+        camas_plan VARCHAR (20),
+        fecha_asignacion_plan DATETIME,
+        numero_camas_plan INT (5),
+        numero_planta_plan INT (5) ,
+        fk_pac_plan INT 
+    );
+
+    CREATE TABLE visitas(
+        id_visi INT (5) PRIMARY KEY AUTO_INCREMENT,
+        nombre_visi VARCHAR (10),
+        apellido_visi VARCHAR (10),
+        numero_tarjeta_visi INT (5),
+        hora_comienzo_visi TIME (5),
+        hora_finalizacion_visi TIME (5),
+        fk_pac_visi INT 
+    );
+
+    CREATE TABLE medicos (
+        id_med INT (5) PRIMARY KEY AUTO_INCREMENT,
+        nombre_med VARCHAR(10),
+        apellido_med VARCHAR (10),
+        fecha_atencion_med DATETIME,
+        hora_atencion_med TIME(5),
+        tipo_diagnostico VARCHAR (10),
+        fk_pac_med INT 
+    );
+
+    CREATE TABLE diagnostico (
+        id_diag INT (5) PRIMARY KEY AUTO_INCREMENT,
+        descripcion_diag VARCHAR (50),
+        fecha_diagnostico_diag DATETIME,
+        fk_pac_diag INT 
+    );
+
+    CREATE TABLE fichero_historico (
+        id_fich INT (5) PRIMARY KEY AUTO_INCREMENT,
+        datos_paciente VARCHAR (50),
+        fk_pac_fich INT 
+    );
+
+    CREATE TABLE visitas_pacientes(
+        id_pac1 INT (5) PRIMARY KEY AUTO_INCREMENT,
+        id_visi1 INT (5),
+        fk_pac_vispac INT 
+    );
+
+    ALTER TABLE plantas ADD Constraint fk_pac_plan FOREIGN KEY (fk_pac_plan) REFERENCES pacientes (id_pac)
+
+    ALTER TABLE visitas ADD constraint fk_pac_visi FOREIGN KEY (fk_pac_visi) REFERENCES pacientes (id_pac )
+
+    ALTER TABLE medicos ADD constraint fk_pac_med FOREIGN KEY (fk_pac_med) REFERENCES pacientes (id_pac)
+
+    ALTER TABLE diagnostico ADD constraint fk_pac_diag FOREIGN KEY (fk_pac_diag) REFERENCES pacientes (id_pac)
+
+    ALTER Table fichero_historico ADD constraint fk_pac_fich FOREIGN KEY (fk_pac_fich) REFERENCES pacientes(id_pac)
+
+    ALTER table visitas_pacientes ADD constraint fk_pac_vispac FOREIGN KEY (fk_pac_vispac) REFERENCES pacientes(id_pac)
+
+
+    INSERT INTO pacientes(nombre_pac,apellido_pac,fecha_de_nacimiento_pac,numero_identificacion_pac,numero_de_seguridad_social)
+    VALUES ("jhon","amaya",2024-05-06,1031435605,1035775);
+    INSERT INTO pacientes(nombre_pac,apellido_pac,fecha_de_nacimiento_pac,numero_identificacion_pac,numero_de_seguridad_social)
+    VALUES ("juan","tairona",2023-04-01,1233242605,1035723);
+    INSERT INTO pacientes(nombre_pac,apellido_pac,fecha_de_nacimiento_pac,numero_identificacion_pac,numero_de_seguridad_social)
+    VALUES ("josue","castillo",2023-01-07,145934502,1035772);
+    INSERT INTO pacientes(nombre_pac,apellido_pac,fecha_de_nacimiento_pac,numero_identificacion_pac,numero_de_seguridad_social)
+    VALUES ("hernesto","tamayo",2024-02-03,1032345678,1035475);
+    INSERT INTO pacientes(nombre_pac,apellido_pac,fecha_de_nacimiento_pac,numero_identificacion_pac,numero_de_seguridad_social)
+    VALUES ("arturo","jaron",2024-01-03,1033458962,1025775);
+
+    INSERT INTO plantas(camas_plan,fecha_asignacion_plan,numero_camas_plan,numero_planta_plan)
+    VALUES ("20 disponibles",2024-04-11,20,2);
+    INSERT INTO plantas(camas_plan,fecha_asignacion_plan,numero_camas_plan,numero_planta_plan)
+    VALUES ("10 disponibles",2024-02-12,10,3);
+    INSERT INTO plantas(camas_plan,fecha_asignacion_plan,numero_camas_plan,numero_planta_plan)
+    VALUES ("15 disponibles",2024-02-13,15,3);
+    INSERT INTO plantas(camas_plan,fecha_asignacion_plan,numero_camas_plan,numero_planta_plan)
+    VALUES ("8 disponibles",2024-02-14,8,2);
+    INSERT INTO plantas(camas_plan,fecha_asignacion_plan,numero_camas_plan,numero_planta_plan)
+    VALUES ("6 disponibles",2024-02-15,6,3);
+
+    INSERT INTO visitas(nombre_visi,apellido_visi,numero_tarjeta_visi,hora_comienzo_visi,hora_finalizacion_visi)
+    VALUES("juan","duarte",2064,'12:15:04.1256','13:10:05.1225'); 
+    INSERT INTO visitas(nombre_visi,apellido_visi,numero_tarjeta_visi,hora_comienzo_visi,hora_finalizacion_visi)
+    VALUES("jesus","duarte",2065,'13:15:04.1256','14:10:05.1225'); 
+    INSERT INTO visitas(nombre_visi,apellido_visi,numero_tarjeta_visi,hora_comienzo_visi,hora_finalizacion_visi)
+    VALUES("karol","duarte",2064,'14:15:04.1256','15:10:05.1225'); 
+    INSERT INTO visitas(nombre_visi,apellido_visi,numero_tarjeta_visi,hora_comienzo_visi,hora_finalizacion_visi)
+    VALUES("daniel","duarte",2064,'15:15:04.1256','16:10:05.1225'); 
+    INSERT INTO visitas(nombre_visi,apellido_visi,numero_tarjeta_visi,hora_comienzo_visi,hora_finalizacion_visi)
+    VALUES("lucas","duarte",2064,'16:15:04.1256','17:10:05.1225'); 
+
+    INSERT INTO medicos(nombre_med,apellido_med,fecha_atencion_med,hora_atencion_med,tipo_diagnostico)
+    VALUES("felipe","pelaez",2024-01-11,'11:15:03.1254',"diagnostico sintomatico");
+    INSERT INTO medicos(nombre_med,apellido_med,fecha_atencion_med,hora_atencion_med,tipo_diagnostico)
+    VALUES("cindy","gutierrez",2024-02-14,'15:15:03.1254',"diagnostico diferencial");
+    INSERT INTO medicos(nombre_med,apellido_med,fecha_atencion_med,hora_atencion_med,tipo_diagnostico)
+    VALUES("julian","nova",2024-03-15,'18:25:03.1254',"diagnostico etiologico");
+    INSERT INTO medicos(nombre_med,apellido_med,fecha_atencion_med,hora_atencion_med,tipo_diagnostico)
+    VALUES("jhonathan","puertas",2024-04-20,'09:15:03.1254',"diagnostico generico");
+    INSERT INTO medicos(nombre_med,apellido_med,fecha_atencion_med,hora_atencion_med,tipo_diagnostico)
+    VALUES("armando","casas",2024-05-26,'07:15:03.1254',"diagnostico anatomico");
+
+    INSERT INTO  diagnostico (descripcion_diag,fecha_diagnostico_diag)
+    VALUES("Diagnostico:grave requiere cirugia",2023-06-23);
+    INSERT INTO  diagnostico (descripcion_diag,fecha_diagnostico_diag)
+    VALUES("Diagnostico:Saludable proximo a recuperacion",2023-06-23);
+    INSERT INTO  diagnostico (descripcion_diag,fecha_diagnostico_diag)
+    VALUES("Diagnostico:saludable proximo a recuperacion",2023-06-23);
+    INSERT INTO  diagnostico (descripcion_diag,fecha_diagnostico_diag)
+    VALUES("Diagnostico:grave requiere cirugia",2023-06-23);
+    INSERT INTO  diagnostico (descripcion_diag,fecha_diagnostico_diag)
+    VALUES("Diagnostico:grave requiere cirugia",2023-06-23);
+
+    INSERT INTO fichero_historico (datos_paciente)
+    VALUES("Nombre:Eduar Apellido:Sanchez Edad:45 Enfermedades:Asma");
+    INSERT INTO fichero_historico (datos_paciente)
+    VALUES("Nombre:Juan Apellido:Cepeda Edad:25 Enfermedades:Erpes");
+    INSERT INTO fichero_historico (datos_paciente)
+    VALUES("Nombre:Andres Apellido:Cepeda Edad:55 Enfermedades:Asma");
+    INSERT INTO fichero_historico (datos_paciente)
+    VALUES("Nombre:Julian Apellido:Fonseca Edad:45 Enfermedades:Diabetes");
+    INSERT INTO fichero_historico (datos_paciente)
+    VALUES("Nombre:Felipe Apellido:Gutierrez Edad:18 Enfermedades:Antrax");
